@@ -9,6 +9,10 @@ ADD https://astral.sh/uv/install.sh /uv-installer.sh
 # Run the installer then remove it
 RUN sh /uv-installer.sh && rm /uv-installer.sh
 
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
 # Ensure the installed binary is on the `PATH`
 ENV PATH="/root/.local/bin/:$PATH"
 
@@ -22,3 +26,4 @@ RUN uv pip install fastapi uvicorn requests --system
 EXPOSE 8000
 
 CMD ["uv","run","app.py"]
+
